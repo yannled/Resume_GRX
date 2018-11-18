@@ -1,0 +1,389 @@
+\documentclass[12pt,landscape]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{multicol,multirow}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{layouts}
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{enumitem}
+
+\usepackage{multicol,caption}
+
+\usepackage[dvipsnames]{xcolor}
+\newcommand{\blue}[1]{\textbf{\textcolor{Cerulean}{#1}}}
+\newcommand{\red}[1]{\textbf{\textcolor{OrangeRed}{#1}}}
+
+
+%%configuration de listings
+\lstset{
+language=c++,
+basicstyle=\ttfamily, %
+identifierstyle=\color{red}, %
+keywordstyle=\color{blue}, %
+stringstyle=\color{black!60}, %
+commentstyle=\it\color{green!95!yellow!1}, %
+columns=flexible, %
+tabsize=2, %
+extendedchars=true, %
+showspaces=false, %
+showstringspaces=false, %
+%numbers=left, %
+numberstyle=\tiny, %
+breaklines=true, %
+breakautoindent=true, %
+captionpos=b
+}
+
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.8in,left=.5in,right=.5in,bottom=.7in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{fancy}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\fontsize{10}{12}\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+%itemize separation
+\setitemize{itemsep=1pt}
+% -----------------------------------------------------------------------
+
+\title{GRX Cheat sheet}
+\lhead{GRX}
+\rhead{Joel Schär}
+
+\begin{document}
+
+\raggedright
+\footnotesize
+
+%\begin{center}
+%    \Large{\textbf{ASD 2 Cheat sheet}} \\
+%\end{center}
+\begin{multicols}{2}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\fontsize{8pt}{9pt}\selectfont
+
+\section{General info}
+Syslog et Netflow sont des outils utiles pour l'admin réseau qui lui permettent de gérer, d'afficher une collection d'événements associés à des dispositifs réseau.
+\section{Syslog}
+Est un outil rudimentaire pour collecter et afficher les messages qui apparaissent sur la console d'un routeur ou d'un switch.
+\section{Netflow}
+Permet de collecter des données opérationnelles de réseaux IP.\\\
+Loguer qui utilise les ressources et pour quoi.\\
+Facturation en contion de l'utilisation.\\
+Allocation des ressoureces de manière plus efficaces.\\
+Dispose d'options sophistiquées d'analyse pour le flot de données.\\
+\textbf{Données récoltées:}\\
+\begin{multicols}{2}
+\begin{itemize}
+\item Ip src/dst
+\item port src/dst
+\item type proto niv.3
+\item type service
+\item interface d'entée logique
+\end{itemize}
+\end{multicols}
+
+
+
+\section{SNMP}
+
+port : 161, 162 (UDP)\\
+niveau d'activité:
+\begin{itemize}
+\item inactif,(aucun monitoring, ignore alarmes)
+\item reactif,(aucun monitoring, réagit en cas de problème)
+\item interactif,(monitoring, dépannage interactif)
+\item proactif,(monitoring,process de restauration automatique)
+\end{itemize}
+
+communautés: \textbf{read-only} (lecture, consultation), \textbf{read-write} (modification, activer/desactiver, changer des configs), \textbf{TRAP} (alertes des clients)\\
+
+\subsection{- MIB (SMIv1)}
+\begin{itemize}
+\item \textbf{Nom:} OID, définit de manière unique un objet
+\item \textbf{Type et syntaxe:} représentation des données échangées entre le manager et le client. indépendant des machines. 
+\item \textbf{codage:} une instance d'un objet est codé dans une chaine d'octets avec BER.
+\end{itemize}
+
+\textbf{- IANA} : gère les nom des individus entreprises -> IOD numbers
+
+\subsection{opérations SNMP}
+\begin{multicols}{2}
+\begin{itemize}
+\item \textbf{get}
+\item getnext \\
+part de root et avance à l'objet suivant de l'arbre (par la droite)
+\item getbulk (SNMPv2,SNMPv3)
+\item \textbf{set}
+\item getresponse
+\item \textbf{trap}\\
+msg d'un agent -> manager(pad de ACK)\\
+exemple: interface desctivé/réactivé, ventilation en panne, ...
+\item notification (SNMPv2,SNMPv3)
+\item inform (SNMPv2,SNMPv3)
+\item report (SNMPv2,SNMPv3)
+\end{itemize}
+\end{multicols}
+
+\subsection{- SNMPv3}
+version originale défaut: sécu -> unique protection: un mot de passe (community)\\
+\textbf{Amélioration de v3, la sécu}\\
+Abandon de la notion d'agents et de managers -> entités SNMP.\\
+
+\textbf{-SNMPv3 engin:}
+Dispatcher, processing des messages, \textbf{Securité(DES->3DES->AES), authentifiaction(MD5, SHA)}
+
+\textbf{- \textit{snmpwalk} / \textit{snmpget}}: walk permet de recevoir plusieurs valeurs de la MIB.
+
+\subsection{- NET-SNMP}
+outil gratuit\\
+commandes -> type : snmpset / snmpget / snmpwalk\\
+
+\subsection{niveaux d'alertes}
+\textbf{pooling interne}: vérif de l'état en interne\\
+\textbf{pooling externe}: utilise de la bande passante, préférer le pooling interne\\
+
+\subsection{Trapes}
+Notification envoyée par un agent SNMP à une station de management en utilisant UDP.\\
+Manière pour un agent d'envoyer des notifications de manière asynchrone sur les conditions de réseau.\\
+Les trapes qu'un agent peut générer sont définies dans la MIB.\\
+Configuration du NMS en réponse aux différentes trapes (ignorer, script)\\
+\textbf{port UDP 162}\\
+Définis de 0 à 6 (coldStart(0): reboot,warmstart(1) variables are not reset, linkUp(3)/linkDown(2): chg interface state,authenticationFailure(4), egpNeighborLoss(5): neibor gone down, enterprisepecifig(6): trape générique)\\
+
+
+\section{Log Management}
+types de message: Info / Debug / Erreur / Alertes\\
+utilité des logs: gestion / détection / troubleshooting / investigation / audit\\
+\textbf{process des logs :}
+\begin{multicols}{2}
+\begin{enumerate}
+\item Raw Log Data
+\item Filter\\
+prlème, car pas de standard entre les différents acteurs (Cisco,..)
+\item Normalization\\
+prendre les messages de log et les arranger dans un format commun
+\item Corrélation\\
+En fonction des logs de plusieurs équipements on peut détecter une corrélation d'événements.
+\item Action
+\begin{itemize}
+\item To Analysts
+\item Alerts
+\item Email
+\item Long-Term Storage
+\end{itemize}
+\end{enumerate}
+\end{multicols}
+
+\subsection{Correlation de vulnérabilité:}\\
+Scanners de vuln, permettent de trouver les systèmes qui sont vulnérables à certains types d'attaques.\\
+info des scannes: vuln host / vuln ports / what to do\\
+Combinaison des analyses de menaces avec des données réèles pour éviter les faux positifs.\\
+
+\subsection{analyse statistique}
+analys fréquencielle / Baseline / Machine learning / combinaison avec règles de corrélation\\
+
+
+
+\section{Acronymes}
+\textbf{MIB} : Management Information Base\\
+\textbf{SMI} : Structure of Management Information -> SMIv2\\
+\textbf{NMS} : Network Managment Station\\
+\textbf{OID} : Object Identifier\\
+\textbf{TCO} : Total Cost of Ownerships\\
+\textbf{BER} : Basic Encoding Rules\\
+\textbf{IANA}: Internet Assigned Numbers Authority\\
+\textbf{USM} : User-Based Security Model\\
+\textbf{VACAM}: View Access Control Model\\
+
+
+\section{1,}
+\begin{enumerate}
+\item \textbf{"le Network managment" :}\\
+fait référence aux activités, methods, procédures et outils qui se rapportent aux opérations, administration, maintenance et provisionnement d'un sysème connecté.
+
+\item \textbf{analogies entre un patient en soin intensif et la management d'un réseau :}\\
+on peut monitorer un patient comme on gère un réseau, lever des excéption en cas de crise cardiaque ou distribuer des médicaments automatiquement.
+
+\item \textbf{aspect dans lesquels une analogies au management réseau s'applique:}\\
+Monitoring, planning et controle sont impliqués dans beaucoup d'aspect.(trains, mission spaciales, centrale électriques.
+
+\item \textbf{Comment le network management peut aider un dep IT à économiser:}\\
+Localiser plus facilement des pannes réseaux, moins de temps pour les résoudres et la répartition des techniciens est plus efficaces. Automatisation des tâches répétitives pour soulager le personnel.
+
+\item \textbf{Comment le network management peut acroitre le revenu d'un service provider : }\\
+Mettre en place des services pour plus de clients rapidement signifie plus d'entrée plus vite. / Offrire de nouveau services de communication incombe à plus d'entrées qui serait pas possible sans des capacités de management correspondant.
+
+\item \textbf{network management perspectives en entreprise ou pour service provider :}\\
+service provider : Network management est un point de valeur compétitive. Donc gros investissement sur la partie support infra. En entreprise, cette partie est sous évalués. 
+
+\item \textbf{ five nines, temps de disponibilité de 99,999\%, si un erreur cause l'arret du système durant 5 min, calculer la temps en mois :}\\
+le temps de disponibilité tombe de 99,999 à 99,9\% (30x24x60x60=2'592'000 sec en 1 mois) 99,999 = 2'5910987 seconde, avec 5 min en moins = 2'591'687 donc 99,988\%
+
+\item \textbf{En quoi le network management d'une entreprise diffère de celle d'un service provider :}\\
+le service provider cherche a avoir le réseau le plus compétitif possible sur le marché, invéstisse dans le support des infras, et custom développement, une entreprise va prendre en considération les couts.
+
+\item \textbf{sydrome de la chaise pivotante : }\\
+problème de manque d'intégration entre les app de gestion obligeant les opérateurs réseau à utiliser plusieurs termianux à la fois et a pivoter la chaise.
+
+\item \textbf{Pourquoi les app de net man sont sous la form de systèmes distribués :}\\
+Management applications are inherently of a distributed nature because they involve
+communication among multiple systems (management systems and network equipment). In
+addition, distributed systems help to address scaling requirements that might require the
+capability to add hardware to increase horsepower, resilience requirements that might require
+support for failovers between systems in case individual systems fail, and requirements to
+support follow-the-sun operations across geographically diverse regions.
+
+
+
+\end{enumerate}
+\section{1, }
+\begin{itemize}
+ \item \textbf{la gestion réseau considère seulement les technos de management réseau : }\\
+ Non, aussi l'organisation, les procédure et les facteurs humains
+ 
+ \item \textbf{comment tracer la résolution d'un problème dans un réseau : }\\
+ avec un système de ticket contenant les informations pertinentes et les étapes de leur résolution, permet d'éviter les infos redondantes, notifie les adminitrateurs, checker les status.
+ 
+ \item \textbf{Quels outils utiliser pour un admin réseau :}\\
+ feuilles excel pour les graph de performance, feuille et stilo pour tracer les numéro de téléphone, et des outils de management réseau.
+ 
+\end{itemize}
+
+
+\section{3, }
+
+\begin{itemize}
+ \item \textbf{donner les deux context ou le terme agent est utilisé :}\\
+ 1. le role d'agent, role de gérer un élément du réseau. 2. composant logiciel d'un réseau implémentant une gestion d'interface et de communication entre élément réseau.
+ 
+ \item \textbf{comparez le paradigme de manager/agent et client/server : }\\
+ dans les deux cas, la communication entre les role est asymétrique, entre manager et client on les deux l'initiative et envoient des demande au système, Agent et serveur sont les deux subordonné aux demandes reçue. La différence est que le manager gère plusieurs agent mais un agent est gérer par un seul ou peu de manager, alors que le serveur sert beaucoup de client.
+ 
+ \item \texbf{qu'est ce qu'une MIB :}\\
+ c'est un base d'information représentant une abstraction d'élément réseau pour le management, fournit par agent sytème.
+ 
+ \item \textbf{différence entre MIB et base de donnée :}\\
+ la MBI représente une vue des ressources réelles, pas un set de données nécéssitant d'etre géré de l'extérieur.
+ 
+ \item \textbf{le traffic de gestion est différent des autre traffic, dans ce cas les network equipement sont la destination ou l'origine du traffic, donnez un exemple de traffic ou le network equipement ne fait que de switcher et rooter mais participe activement :}\\
+ les netowrk equipement peuvent controler et signaler le trafic comme par exemple le traffic provenant des protocol de routing.
+ 
+ \item \textbf{quelle est la raison la plus important pour utiliser une gestion réseau dédiée au lieu d'une partagle :}\\
+ Pour des questions de fiabilité, dans le cas d'erreur réseau ou de congestion, il est important de communiquer avec des élément réseau pour le diagnostique et corriger les erreurs, sans le management dédié cela serait compliqué. Cela permet aussi d'éviter les interférence avec d'autre traffic réseau.
+ 
+ \item \textbf{QUel autre terme est utilisé pour parler de management système :}\\
+ Operational support système (OSS)
+ 
+ \item \textbf{}
+\end{itemize}
+
+
+
+
+\section{6, management conversation}
+
+\begin{enumerate}
+
+\item \textbf{Nomer 4 catégores d'information de management et dire ce qui les distingues :}
+\begin{itemize}
+\item State information reflects the current state of physical and logical resources. It is
+used mainly for monitoring. It tends to be dynamic in nature and subject to constant change,
+and it cannot be modified by management applications.
+\item Physical configuration information is static in nature, changing rarely, if at all; it cannot be
+modified by management applications.
+\item Logical configuration information concerns parameter settings that are subject to
+modification by network administrators and management applications. It provides the
+management “knobs” for the managed device.
+\item Historical information contains periodic past snapshots of state information, as well as logs
+of events that have occurred in the past. It is less common than other categories of
+management information and is often retrieved in bulk from the device.
+\end{itemize}
+
+\item \textbf{De quel manière une MIB diffère d'une base de donnée :}\\
+C'est une vue abstraite d'un système réèle actif, non un set d'information qui est toqué quelque part dans un système de fichier. La MIB est optimizée pour les tâches de management.- for example, omitting general-purpose database capabilities such as joins—
+and has a smaller footprint. L'objet managé contenu dans une MIB tend à être plus heterogene qu'une information contenue dans une base de donnée de management system.
+
+\item \textbf{2 paradimgs sous-jacent au langage de definition MIB : }\\
+\begin{itemize}
+\item Orienté Table
+\item Orienté Objet
+\end{itemize}
+
+\item \textbf{Un objet MIB pour lequel il fait sens d'avoir un accès  maximum de "write only :}\\
+Un objet content des informations sensible tel que des mots de passe.
+
+\item \textbf{Nom du langage pour la definition de l'information de management utilisé avec SNMP:}\\
+SMI, Structure of Management Information -> SMIv2
+
+\item \textbf{Dans SMI, différence entre un OID désignant :}\\
+\begin{itemize}
+\item \textbf{un objet} : OID qui férère un objet est globalement unique.
+\item \textbf{l'instance d'un objet} : est unique seulement dans le MIB qui le contient.
+\end{itemize}
+
+\item \textbf{Pourquoi les objet SNMP MIB ne sont pas considérés objets dans un sens "object-oriented" :}\\
+They lack features that are commonly associated with object orientation. One such
+feature is inheritance (the capability to derive specializations from existing object class
+definitions). Other object-oriented features that SNMP MIB objects lack but that were not
+mentioned in the chapter include polymorphism (the capability for instances of a subclass to
+be treated as if they are instances of a superclass) and the inclusion of methods as part of the
+object class definition, commonly associated with the property of encapsulation. SNMP MIB
+objects are essentially simply MIB variables.
+
+\item \textbf{Les SNMP MIBs utilisent une nomenclature hiérarchic très similaire à la structure de beaucoup de système opérationels utilisent pour nomer une strucutre de fichiers. Dans quel sens l'arbre d'identifcation d'objects de SNMP MIB est différent d'un système de nomenclature d'un système de fichier.}\\
+The naming tree in a file system represents a containment hierarchy between the
+objects. If you delete an object that contains other objects—that is, that are in a subtree
+underneath the object—those other objects will be deleted as well. The object identifier tree
+of SNMP MIBs, on the other hand, does not reflect a hierarchy between objects. Instead, it
+reflects the structure of the underlying MIB definition, or the way in which the definitions of
+the object types are grouped that are instantiated by objects in the MIB. The objects in the
+MIB themselves are flat; every one of them is a leaf node in the MIB object identifier tree.
+
+\item \textbf{A quoi fait référence la granularité d'un model :}\\
+It refers to the degree to which management information is aggregated and lumped
+together (coarse granularity), or to which every individual real resource is separately
+accounted for (fine granularity). Generally, a coarse-grained model is more efficient but offers
+less detailed control capabilities than a fine-grained model.
+
+\end{enumerate}
+
+
+
+
+\end{multicols}
+
+\end{document}
