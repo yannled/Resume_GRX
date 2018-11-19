@@ -176,6 +176,8 @@ commandes -> type : snmpset / snmpget / snmpwalk\\
 \textbf{pooling interne}: vérif de l'état en interne\\
 \textbf{pooling externe}: utilise de la bande passante, préférer le pooling interne\\
 
+\subsection{Pooling SNMP}
+
 \subsection{Trapes}
 Notification envoyée par un agent SNMP à une station de management en utilisant UDP.\\
 Manière pour un agent d'envoyer des notifications de manière asynchrone sur les conditions de réseau.\\
@@ -383,7 +385,7 @@ cela se réfère au degré auquel les informations de gestion sont regroupées (
 \section{8,}
 \begin{itemize}
  \item \textbf{Pourquoi SNMPv1 n'est pas considéré comme sécurité : }\\
- la seule sécurité reside dans une string faisant partie des messages SNMP communiquée en clair. Aucune authentification permet à un agent de vérifier l'identitié de l'envoyeur, aucun chiffrement. Un hacker peut donc envoyer des messages suseptible de modifier les configurations ou autre. Certains agents bloque alors la modification des configuration par SNPM et accepte seulement la suveillance.
+ la seule sécurité reside dans une community string faisant partie des messages SNMP communiquée en clair. Aucune authentification permet à un agent de vérifier l'identitié de l'envoyeur, aucun chiffrement. Un hacker peut donc envoyer des messages suseptible de modifier les configurations ou autre. Certains agents bloque alors la modification des configuration par SNPM et accepte seulement la suveillance.
  
  \item \textbf{SNMPv1 a l'avantage d'etre plus simple pour l'implémentation de ses agents. mais quels sont ses inconvénient}\\
  Cette simplicité diminue l'efficatité et les applications doivent donc fournir plus de travail. En contre partir SNMPv3 est plus efficasse mais moins simple.
@@ -397,7 +399,20 @@ cela se réfère au degré auquel les informations de gestion sont regroupées (
  \item \textbf{En quoi la gestion par ligne de commande et syslog se complète :}\\
  la ligne de commande permet les intéraction sur les requetes et les réponses mais ne traite pas les événements, alors que syslog traite les évenements mais pas les intéractions.
  
- \item \textbf{}
+ \item \textbf{SNMP a son propre concept de MIBs: }\\
+ la MIB est une base de données d'information de management du device qui peut etre surjet à des opérations Netconf.
+ 
+ \item \textbf{SNMP et sa fiablité : }\\
+ SNMP utilise UDP comme transport dans lequels les paquets (request et response) peuvent etre supprimés. On peut gérer cette fiablité dns Netconf en spécifiant ce dernier en tant qu'exigence pour le transport. (couche protocol).
+ 
+ \item \textbf{différence entre Netconf et un protocol de transfert de fichier simple pour fichier de conf:}\\
+ Netconf permet de copier, tranferer et supprimer de fichier de configuration tout comme un gestionnaire de fichier mais netconf permet la validation de fichier de configuration et des rollback en cas d'erreur ainsi que de pouvoir exéctuer des commande et pas seulement en envoyer.
+ 
+ \item \textbf{Qu'est-ce qu'un flux dans NetFlow : }\\
+ ensemble de paquets IP traversant un routeur définis par 7 paramètre : IP source, port source, IP destination port destination, type de protocol, type de service et interface sur laquelle les paquets sont reçu.
+ 
+ \item \textbf{Netflow permet d'identifier les principaux interlocuteurs de notre réseau : }\\
+ si les inerlocuteurs sont en ip fixe, on regroupe les infos par routeur puis par adresse IP source en calculant les totaux de chaque flux. On peut donc regrouper les adresses d'ou proviennent le plus de traffic.
 \end{itemize}
 
 \end{enumerate}
