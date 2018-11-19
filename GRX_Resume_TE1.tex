@@ -228,6 +228,7 @@ analys fréquencielle / Baseline / Machine learning / combinaison avec règles d
 \textbf{IANA}: Internet Assigned Numbers Authority\\
 \textbf{USM} : User-Based Security Model\\
 \textbf{VACAM}: View Access Control Model\\
+\textbf{TMN} : Telecommunications Management Netowork, standards définissant un réseau utilisé pour la gestion d'autres réseau
 
 
 \section{1,}
@@ -304,13 +305,34 @@ support follow-the-sun operations across geographically diverse regions.
  \item \textbf{quelle est la raison la plus important pour utiliser une gestion réseau dédiée au lieu d'une partagle :}\\
  Pour des questions de fiabilité, dans le cas d'erreur réseau ou de congestion, il est important de communiquer avec des élément réseau pour le diagnostique et corriger les erreurs, sans le management dédié cela serait compliqué. Cela permet aussi d'éviter les interférence avec d'autre traffic réseau.
  
- \item \textbf{QUel autre terme est utilisé pour parler de management système :}\\
+ \item \textbf{Quel autre terme est utilisé pour parler de management système :}\\
  Operational support système (OSS)
  
- \item \textbf{}
 \end{itemize}
 
+\section{4, }
 
+\begin{itemize}
+ \item \textbf{Quels sont les aspects de gestion de l'interoperabilité  :}\\
+ la communication, les fonctions et les informations.
+ 
+ \item \textbf{Pourquoi un protocol entre managers et agents est-il nécéssaire et pas seulement un connectivité:}\\
+ La connectivité leurs permettrait de s'entendre mais pas forcement ce comprendre. le protocol de gestion va permettre de définir les sytaxe et les règles de communication.
+ 
+ \item \textbf{Pourquoi il est important pour l'interoperabilité qu'un manager comprenne les fonction provenant d'un agent : }\\
+ si il n'y a pas de comprehension entre eux, le manager pourrait de pas comprendre les code de retour et les effets d'un opération. Pas exemple si un manager envoie un groupe de  commande et que l'agent les effectue pas de manière transactionelles.
+ 
+ \item \textbf{Utilité des normes de gestion dans le cas ou on gère plusieurs périphériques et fournisseurs : }\\
+ Car si on a pas de norme nous devrions définir des script pour toutes les différentes interfaces au lieu d'une.
+ 
+ \item \textbf{nommer les 3 phases du cycle de vie de la gestion réseau : }\\
+ plannification réeau, déploiement réseau, opération réseau.
+ 
+ \item \textbf{Un upgrade peut causer des soucis de disponibilité dans un réseau, citez trois exemples :}\\
+ déconnection et reconnection d'un cable physique, charger une nouvelle image logiciel (OS) nécéssisant un reboot. Effectuer des mise à jour réinitialisant les configurations déjà faites.
+ 
+ 
+\end{itemize}
 
 
 \section{6, management conversation}
@@ -319,17 +341,10 @@ support follow-the-sun operations across geographically diverse regions.
 
 \item \textbf{Nomer 4 catégores d'information de management et dire ce qui les distingues :}
 \begin{itemize}
-\item State information reflects the current state of physical and logical resources. It is
-used mainly for monitoring. It tends to be dynamic in nature and subject to constant change,
-and it cannot be modified by management applications.
-\item Physical configuration information is static in nature, changing rarely, if at all; it cannot be
-modified by management applications.
-\item Logical configuration information concerns parameter settings that are subject to
-modification by network administrators and management applications. It provides the
-management “knobs” for the managed device.
-\item Historical information contains periodic past snapshots of state information, as well as logs
-of events that have occurred in the past. It is less common than other categories of
-management information and is often retrieved in bulk from the device.
+\item State information : reflète l'état courrant de ressources physique ou logiques. Utilisé dans le monitoring, dynamique et souvent modifié par les applications de management.
+\item Physical configuration information : statique par nature, change rarement et ne peut pas etre modifié par les applications de management.
+\item Logical configuration information  : concerne la configuration des paramètre qui peut etre modifié par les administrateurs réseau ou les application de management
+\item Historical information : contient des snapshots periodiques de l'état des informations, logs des événement passés, le plus commun.
 \end{itemize}
 
 \item \textbf{De quel manière une MIB diffère d'une base de donnée :}\\
@@ -343,7 +358,7 @@ and has a smaller footprint. L'objet managé contenu dans une MIB tend à être 
 \end{itemize}
 
 \item \textbf{Un objet MIB pour lequel il fait sens d'avoir un accès  maximum de "write only :}\\
-Un objet content des informations sensible tel que des mots de passe.
+Un objet contient des informations sensible tel que des mots de passe.
 
 \item \textbf{Nom du langage pour la definition de l'information de management utilisé avec SNMP:}\\
 SMI, Structure of Management Information -> SMIv2
@@ -355,28 +370,15 @@ SMI, Structure of Management Information -> SMIv2
 \end{itemize}
 
 \item \textbf{Pourquoi les objet SNMP MIB ne sont pas considérés objets dans un sens "object-oriented" :}\\
-They lack features that are commonly associated with object orientation. One such
-feature is inheritance (the capability to derive specializations from existing object class
-definitions). Other object-oriented features that SNMP MIB objects lack but that were not
-mentioned in the chapter include polymorphism (the capability for instances of a subclass to
-be treated as if they are instances of a superclass) and the inclusion of methods as part of the
-object class definition, commonly associated with the property of encapsulation. SNMP MIB
-objects are essentially simply MIB variables.
+Il manque de fonctionnalités généralement associées à l'orienté objet tel que l'héritage, ou le polymorphisme ainsi que la définision des méthode dans les classes qui sont au final essentiellement fait de variables MIB.
+
 
 \item \textbf{Les SNMP MIBs utilisent une nomenclature hiérarchic très similaire à la structure de beaucoup de système opérationels utilisent pour nomer une strucutre de fichiers. Dans quel sens l'arbre d'identifcation d'objects de SNMP MIB est différent d'un système de nomenclature d'un système de fichier.}\\
-The naming tree in a file system represents a containment hierarchy between the
-objects. If you delete an object that contains other objects—that is, that are in a subtree
-underneath the object—those other objects will be deleted as well. The object identifier tree
-of SNMP MIBs, on the other hand, does not reflect a hierarchy between objects. Instead, it
-reflects the structure of the underlying MIB definition, or the way in which the definitions of
-the object types are grouped that are instantiated by objects in the MIB. The objects in the
-MIB themselves are flat; every one of them is a leaf node in the MIB object identifier tree.
+Dans le cas d'une arboresence d'un système de fichier, si on supprime un objet contenant d'autre objets ces derniers seront aussi supprimé.
+Dans le cas d'arboresence MIB SNMP, ça ne reflète pas une hiérarchie entre objets mais la structure de la définition de base MIB, les objets dans la MIB sont donc plat et chacun est un noeud.
 
 \item \textbf{A quoi fait référence la granularité d'un model :}\\
-It refers to the degree to which management information is aggregated and lumped
-together (coarse granularity), or to which every individual real resource is separately
-accounted for (fine granularity). Generally, a coarse-grained model is more efficient but offers
-less detailed control capabilities than a fine-grained model.
+cela se réfère au degré auquel les informations de gestion sont regroupées (granularité forte) ou chaque resource individuelles (granularité faible). en général la granularité forte offre de meilleures performance mais moins de capacité de controle.
 
 \end{enumerate}
 

@@ -211,7 +211,7 @@ En fonction des logs de plusieurs équipements on peut détecter une corrélatio
 \subsection{Correlation de vulnérabilité:}\\
 Scanners de vuln, permettent de trouver les systèmes qui sont vulnérables à certains types d'attaques.\\
 info des scannes: vuln host / vuln ports / what to do\\
-Combinaison des analyses de menaces avec des données réèles pour éviter les faux positifs.\\
+Combinaison des analyses de menaces avec des données réèles pour éviter les faux positifs.
 
 \subsection{analyse statistique}
 analys fréquencielle / Baseline / Machine learning / combinaison avec règles de corrélation\\
@@ -228,6 +228,7 @@ analys fréquencielle / Baseline / Machine learning / combinaison avec règles d
 \textbf{IANA}: Internet Assigned Numbers Authority\\
 \textbf{USM} : User-Based Security Model\\
 \textbf{VACAM}: View Access Control Model\\
+\textbf{TMN} : Telecommunications Management Netowork, standards définissant un réseau utilisé pour la gestion d'autres réseau
 
 
 \section{1,}
@@ -268,9 +269,8 @@ support for failovers between systems in case individual systems fail, and requi
 support follow-the-sun operations across geographically diverse regions.
 
 
-
 \end{enumerate}
-\section{1, }
+\section{2, }
 \begin{itemize}
  \item \textbf{la gestion réseau considère seulement les technos de management réseau : }\\
  Non, aussi l'organisation, les procédure et les facteurs humains
@@ -293,7 +293,7 @@ support follow-the-sun operations across geographically diverse regions.
  \item \textbf{comparez le paradigme de manager/agent et client/server : }\\
  dans les deux cas, la communication entre les role est asymétrique, entre manager et client on les deux l'initiative et envoient des demande au système, Agent et serveur sont les deux subordonné aux demandes reçue. La différence est que le manager gère plusieurs agent mais un agent est gérer par un seul ou peu de manager, alors que le serveur sert beaucoup de client.
  
- \item \texbf{qu'est ce qu'une MIB :}\\
+ \item \textbf{qu'est ce qu'une MIB :}\\
  c'est un base d'information représentant une abstraction d'élément réseau pour le management, fournit par agent sytème.
  
  \item \textbf{différence entre MIB et base de donnée :}\\
@@ -305,13 +305,35 @@ support follow-the-sun operations across geographically diverse regions.
  \item \textbf{quelle est la raison la plus important pour utiliser une gestion réseau dédiée au lieu d'une partagle :}\\
  Pour des questions de fiabilité, dans le cas d'erreur réseau ou de congestion, il est important de communiquer avec des élément réseau pour le diagnostique et corriger les erreurs, sans le management dédié cela serait compliqué. Cela permet aussi d'éviter les interférence avec d'autre traffic réseau.
  
- \item \textbf{QUel autre terme est utilisé pour parler de management système :}\\
+ \item \textbf{Quel autre terme est utilisé pour parler de management système :}\\
  Operational support système (OSS)
  
- \item \textbf{}
 \end{itemize}
 
+\section{4, }
 
+\begin{itemize}
+ \item \textbf{Quels sont les aspects de gestion de l'interoperabilité  :}\\
+ la communication, les fonctions et les informations.
+ 
+ \item \textbf{Pourquoi un protocol entre managers et agents est-il nécéssaire et pas seulement un connectivité:}\\
+ La connectivité leurs permettrait de s'entendre mais pas forcement ce comprendre. le protocol de gestion va permettre de définir les sytaxe et les règles de communication.
+ 
+ \item \textbf{Pourquoi il est important pour l'interoperabilité qu'un manager comprenne les fonction provenant d'un agent : }\\
+ si il n'y a pas de comprehension entre eux, le manager pourrait de pas comprendre les code de retour et les effets d'un opération. Pas exemple si un manager envoie un groupe de  commande et que l'agent les effectue pas de manière transactionelles.
+ 
+ \item \textbf{Utilité des normes de gestion dans le cas ou on gère plusieurs périphériques et fournisseurs : }\\
+ Car si on a pas de norme nous devrions définir des script pour toutes les différentes interfaces au lieu d'une.
+ 
+ \item \textbf{nommer les 3 phases du cycle de vie de la gestion réseau : }\\
+ plannification réeau, déploiement réseau, opération réseau.
+ 
+ \item \textbf{Un upgrade peut causer des soucis de disponibilité dans un réseau, citez trois exemples :}\\
+ déconnection et reconnection d'un cable physique, charger une nouvelle image logiciel (OS) nécéssisant un reboot. Effectuer des mise à jour réinitialisant les configurations déjà faites.
+ 
+ \item \textbf{cookie-cutter, raison de son utilité : }\\
+ 
+\end{itemize}
 
 
 \section{6, management conversation}
